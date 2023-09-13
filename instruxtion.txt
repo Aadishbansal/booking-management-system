@@ -1,0 +1,3 @@
+set up backend and front end as required 
+run npm i 
+change the url if you need and run :)
