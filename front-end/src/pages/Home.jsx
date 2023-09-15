@@ -1,34 +1,56 @@
 import { useContext, useEffect, useState } from "react";
 import BookList from "../components/book/Booklist";
 import BookContext from "../store/store";
+import Search from "../components/utils/Search";
 const URL = "http://localhost:8080/api/books";
+/*
+[{
+  "title": "CakePHP Application Development: Step-by-step introduction to rapid web development using the open-source MVC CakePHP framework",
+    "author": "Ahsanul Bari, Anupom Syam",
+    "genre": "Computer Science"
+},
+{
+  "title": "Agile Web Development with Rails",
+    "author": "Sam Ruby, Dave Thomas, David Heinemeier Hansson",
+    "genre": "Web development"
+},
+    {
+    "title": "Flask Web Development",
+    "author": "Miguel Grinberg",
+    "genre": "python"
+  },
+  {
+    "title": "Agile web development with rails: a Pragmatic guide",
+    "author": "Dave Thomas, David Heinemeier Hansson, Leon Breedt, Mike Clark, Thomas Fuchs, Andrea Schwarz",
+    "genre": "'Web site development"
+  }
 
+]
+*/
 const Home = () => {
   const ctx = useContext(BookContext);
   const [books, setBooks] = useState();
-  const handleSearch = (e) => {
-    ctx.filterBook(e.target.value);
-    setBooks(ctx.filteredBook);
+
+  const handleFilter = (val) => {
+    console.log(val);
+    console.log(books);
+    setBooks(ctx.filterBook(val));
   };
+
   useEffect(() => {
     fetch(URL)
       .then((res) => res.json())
       .then((res) => {
         setBooks(res.data);
         ctx.populateBook(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
   return (
     <div className="container ">
-      <div className="d-flex my-3 col-10 col-lg-8 mx-auto" role="search">
-        <input
-          className="form-control me-2"
-          type="search"
-          placeholder="Search"
-          onChange={handleSearch}
-          aria-label="Search"
-        />
-      </div>
+      <Search onFilter={handleFilter} />
       <BookList books={books} />
     </div>
   );

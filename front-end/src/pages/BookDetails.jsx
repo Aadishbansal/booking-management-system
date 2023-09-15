@@ -18,7 +18,6 @@ const BookDetails = () => {
   useEffect(() => {
     setBook(ctx.getBookById(bookId));
   }, [bookId, book]);
-
   return (
     book && (
       <div className="container">

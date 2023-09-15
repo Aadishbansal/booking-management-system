@@ -24,17 +24,22 @@ export const BookContextProvider = (props) => {
   };
   const filterBook = (val) => {
     if (!val || val === "") {
-      setFilteredBooks(books);
-      return;
+      console.log(books);
+      console.log(val);
+
+      return books;
     }
     const newBooks = [];
-    const tempBook = [...books];
-    tempBook.forEach((book) => {
+    books.forEach((book) => {
+      console.log(book.title.includes(val) || book.author.includes(val));
       if (book.title.includes(val) || book.author.includes(val)) {
         newBooks.push(book);
       }
     });
-    setFilteredBooks(newBooks);
+    console.log(books);
+    return newBooks;
+    // console.log(newBooks);
+    // setFilteredBooks(newBooks);
   };
 
   const handleAddBook = (book) => {
